@@ -3,7 +3,13 @@
   "version": "0.0.1",
   "type": "module",
   "sideEffects": false,
-  "exports": "./dist/index.js",
+  "exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js"
+		},
+		"./*": "./*"
+	},
   "types": "dist/index.d.ts",
   "module": "dist/index.js",
   "files": [

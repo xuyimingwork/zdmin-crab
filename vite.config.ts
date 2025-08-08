@@ -19,12 +19,13 @@ export default defineConfig({
     AutoImport({
       imports: ['vue']
     }),
-    Inspect({
-      build: true,
-      outputDir: '.vite-inspect'
-    }),
-    unstableRolldownAdapter(analyzer()),
+    // Inspect({
+    //   build: true,
+    //   outputDir: '.vite-inspect'
+    // }),
+    // unstableRolldownAdapter(analyzer()),
     dts({
+      rollupTypes: true,
       tsconfigPath: './tsconfig.app.json'
     })
   ],
