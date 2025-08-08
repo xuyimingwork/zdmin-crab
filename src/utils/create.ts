@@ -1,5 +1,5 @@
 import { createBEM } from '@/utils/bem'
-import { camelCase, upperFirst } from 'lodash-es'
+import { camelCase, upperFirst } from 'es-toolkit/compat'
 
 const PREFIX = 'Crab'
 

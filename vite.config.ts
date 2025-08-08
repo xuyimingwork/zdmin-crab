@@ -5,6 +5,9 @@ import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import vueDevTools from 'vite-plugin-vue-devtools'
 import AutoImport from 'unplugin-auto-import/vite'
+import Inspect from 'vite-plugin-inspect'
+import { unstableRolldownAdapter } from 'vite-bundle-analyzer'
+import { analyzer } from 'vite-bundle-analyzer'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -15,6 +18,11 @@ export default defineConfig({
     AutoImport({
       imports: ['vue']
     }),
+    Inspect({
+      build: true,
+      outputDir: '.vite-inspect'
+    }),
+    unstableRolldownAdapter(analyzer())
   ],
   resolve: {
     alias: {

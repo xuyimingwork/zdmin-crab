@@ -1,4 +1,4 @@
-import { filter, join, kebabCase, keys, map, merge, pickBy, trim, uniq } from "lodash-es"
+import { filter, join, kebabCase, keys, map, merge, pickBy, trim, uniq } from "es-toolkit/compat"
 
 type Modifiers = {
   [key: string]: boolean
