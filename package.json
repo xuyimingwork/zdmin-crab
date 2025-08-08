@@ -1,6 +1,6 @@
 {
   "name": "@zdmin/crab",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "type": "module",
   "sideEffects": false,
   "exports": {
@@ -24,7 +24,8 @@
     "type-check": "vue-tsc --build",
     "lint:oxlint": "oxlint . --fix -D correctness --ignore-path .gitignore",
     "lint:eslint": "eslint . --fix",
-    "lint": "run-s lint:*"
+    "lint": "run-s lint:*",
+    "prepublishOnly": "run-s build"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
