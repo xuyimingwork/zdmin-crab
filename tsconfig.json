@@ -1,10 +1,14 @@
 {
-  "extends": "@tsconfig/node22/tsconfig.json",
-  "include": ["eslint.config.*"],
-  "compilerOptions": {
-    "noEmit": true,
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
-    "types": ["node"]
-  }
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    },
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.vitest.json"
+    }
+  ]
 }

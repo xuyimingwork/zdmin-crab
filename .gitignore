@@ -13,8 +13,6 @@ dist
 dist-ssr
 coverage
 *.local
-packages/docs/.vitepress/cache
-packages/zdmin-crab/README.md
 
 /cypress/videos/
 /cypress/screenshots/
