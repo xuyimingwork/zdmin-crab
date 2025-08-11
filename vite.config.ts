@@ -19,11 +19,13 @@ export default defineConfig({
     AutoImport({
       imports: ['vue']
     }),
-    // Inspect({
-    //   build: true,
-    //   outputDir: '.vite-inspect'
-    // }),
-    // unstableRolldownAdapter(analyzer()),
+    ...(process.env.DEBUG ? [
+      Inspect({
+        build: true,
+        outputDir: '.vite-inspect'
+      }),
+      unstableRolldownAdapter(analyzer()),
+    ] : []),
     dts({
       rollupTypes: true,
       tsconfigPath: './tsconfig.app.json'
@@ -35,7 +37,6 @@ export default defineConfig({
     },
   },
   build: {
-    minify: false,
     lib: {
       entry: fileURLToPath(new URL('./src/index.ts', import.meta.url)),
       formats: ['es'],
