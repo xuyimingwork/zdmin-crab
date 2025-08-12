@@ -8,9 +8,9 @@ type MaybePromise<T = any> = T | Promise<T> | PromiseLike<T>
 type Query<P, I> = (options: { params: P, pageIndex: number, pageSize: number }) => MaybePromise<Array<I> | { data: Array<I>, total: number }>
 type Data<Q extends Query<any, any>> = (Awaited<ReturnType<Q>>) extends Array<infer D>
   ? Array<D>
-  : (Awaited<ReturnType<Q>>) extends ({ data: Array<any> })
-    ? Awaited<ReturnType<Q>>['data']
-    : unknown
+  : (Awaited<ReturnType<Q>>) extends ({ data: Array<infer D> })
+    ? Array<D>
+    : [] // query 返回异常参数时，类型为空数组
 
 export function useList<
   Q extends Query<any, any> = any
