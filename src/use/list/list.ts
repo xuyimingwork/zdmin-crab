@@ -9,7 +9,7 @@ type MaybePromise<T = any> = T | Promise<T> | PromiseLike<T>
 export function useList<
   Item = any,
   Params = any,
-  Fn extends (...args: any) => any = (options: { params: Params, pageIndex: number, pageSize: number }) => MaybePromise<Array<Item> | { data: Array<Item>, total: number }>>({
+  Fn extends (options: { params: Params, pageIndex: number, pageSize: number }) => MaybePromise<Array<Item> | { data: Array<Item>, total: number }> = any>({
   query
 }: {
   query: Fn
@@ -83,7 +83,7 @@ export function useList<
     pageSize, // 传参（读写）
 
     loading: computed(() => loading.value), // 结果（只读）
-    response: computed(() => rawData.value),
+    response: computed(() => rawData.value as any),
     data, // 结果（只读）
     total, // 结果（只读）
     rowIndex, // 结果（只读）
