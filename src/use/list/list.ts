@@ -47,9 +47,14 @@ export function useList<Item = any, Params = any>({
 
   // 初始状态总项数为 0
   // 单页状态总项数为列表项数
-  const result = computed(() => Array.isArray(rawData.value)
-    ? { data: rawData.value, total: rawData.value.length }
-    : { data: rawData.value.data, total: rawData.value.total })
+  const result = computed<{ data: Item[], total: number }>(() => {
+    if (Array.isArray(rawData.value)) return { data: rawData.value, total: rawData.value.length }
+
+    const { data, total, ...rest } = rawData.value || {}
+    if (Array.isArray(data) && Number.isInteger(total)) return { ...rest, data, total }
+
+    return { data: [], total: 0 }
+  })
 
   const data = computed(() => result.value.data)
   const total = computed(() => result.value.total)
