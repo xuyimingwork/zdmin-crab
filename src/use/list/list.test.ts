@@ -1,7 +1,7 @@
 import { useList } from "@/use/list/list";
 import { expect, test } from 'vitest'
 
-test('允许查询返回空数据', () => {
+test('allow query return illegal', () => {
   const { data } = useList({ query: () => null as any })
   expect(data.value).toBeInstanceOf(Array)
   expect(data.value.length).toBe(0)
