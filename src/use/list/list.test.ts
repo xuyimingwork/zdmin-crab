@@ -16,7 +16,7 @@ test('allow query return async undefined', () => {
 })
 
 test('allow query return addition value', () => {
-  const { response, reload } = useList({ query: () => ({ total: 3, data: [], abc: 'ok' }) })
+  const { response, reload } = useList({ query: () => ({ total: 3, data: [1, 2, 3], abc: 'ok' }) })
   expect(response.value).toBe(undefined)
   reload()
   expect(response.value.abc).toBe('ok')

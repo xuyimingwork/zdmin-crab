@@ -5,22 +5,27 @@ import { useAsyncData } from "vue-asyncx"
 import type { Ref, ComputedRef } from 'vue'
 
 type MaybePromise<T = any> = T | Promise<T> | PromiseLike<T>
+type Query<P, I> = (options: { params: P, pageIndex: number, pageSize: number }) => MaybePromise<Array<I> | { data: Array<I>, total: number }>
+type Data<Q extends Query<any, any>> = (Awaited<ReturnType<Q>>) extends Array<infer D>
+  ? Array<D>
+  : (Awaited<ReturnType<Q>>) extends ({ data: Array<any> })
+    ? Awaited<ReturnType<Q>>['data']
+    : unknown
 
 export function useList<
-  Item = any,
-  Params = any,
-  Fn extends (options: { params: Params, pageIndex: number, pageSize: number }) => MaybePromise<Array<Item> | { data: Array<Item>, total: number }> = any>({
+  Q extends Query<any, any> = any
+>({
   query
 }: {
-  query: Fn
+  query: Q
 }): {
-  params: Ref<Params>, // 传参（读写）
+  params: Ref<Parameters<Q>['0']['params']>, // 传参（读写）
   pageIndex: Ref<number>, // 传参（读写）
   pageSize: Ref<number>, // 传参（读写）
 
   loading: ComputedRef<boolean>, // 结果（只读）
-  response: ComputedRef<Awaited<ReturnType<Fn>>>
-  data: ComputedRef<Item[]>, // 结果（只读）
+  response: ComputedRef<Awaited<ReturnType<Q>>>
+  data: ComputedRef<Data<Q>>, // 结果（只读）
   total: ComputedRef<number>, // 结果（只读）
   rowIndex: ComputedRef<number>, // 结果（只读）
 
@@ -47,8 +52,8 @@ export function useList<
 
   // 初始状态总项数为 0
   // 单页状态总项数为列表项数
-  const result = computed<{ data: Item[], total: number }>(() => {
-    if (Array.isArray(rawData.value)) return { data: rawData.value, total: rawData.value.length }
+  const result = computed<{ data: Data<Q>, total: number }>(() => {
+    if (Array.isArray(rawData.value)) return { data: rawData.value as any, total: rawData.value.length }
 
     const { data, total, ...rest } = rawData.value || {}
     if (Array.isArray(data) && Number.isInteger(total)) return { ...rest, data, total }
