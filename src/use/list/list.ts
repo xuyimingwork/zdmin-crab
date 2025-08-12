@@ -4,22 +4,22 @@
 import { useAsyncData } from "vue-asyncx"
 import type { Ref, ComputedRef } from 'vue'
 
-type MaybePromise<T = any> = T | Promise<T>
+type MaybePromise<T = any> = T | Promise<T> | PromiseLike<T>
 
-export function useList<Item = any, Params = any>({
+export function useList<
+  Item = any,
+  Params = any,
+  Fn extends (...args: any) => any = (options: { params: Params, pageIndex: number, pageSize: number }) => MaybePromise<Array<Item> | { data: Array<Item>, total: number }>>({
   query
 }: {
-  query: ({}: {
-    params: Params,
-    pageIndex: number,
-    pageSize: number,
-  }) => MaybePromise<Array<Item> | { data: Array<Item>, total: number }>
+  query: Fn
 }): {
   params: Ref<Params>, // 传参（读写）
   pageIndex: Ref<number>, // 传参（读写）
   pageSize: Ref<number>, // 传参（读写）
 
   loading: ComputedRef<boolean>, // 结果（只读）
+  response: ComputedRef<Awaited<ReturnType<Fn>>>
   data: ComputedRef<Item[]>, // 结果（只读）
   total: ComputedRef<number>, // 结果（只读）
   rowIndex: ComputedRef<number>, // 结果（只读）
@@ -42,7 +42,7 @@ export function useList<Item = any, Params = any>({
       pageSize: pageSize.value
     })
   }, {
-    initialData: []
+    initialData: undefined
   })
 
   // 初始状态总项数为 0
@@ -83,6 +83,7 @@ export function useList<Item = any, Params = any>({
     pageSize, // 传参（读写）
 
     loading: computed(() => loading.value), // 结果（只读）
+    response: computed(() => rawData.value),
     data, // 结果（只读）
     total, // 结果（只读）
     rowIndex, // 结果（只读）
