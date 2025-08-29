@@ -41,6 +41,7 @@
   "author": "Xu Yiming",
   "license": "MIT",
   "peerDependencies": {
+    "@vueuse/core": ">= 11.0.0",
     "vue": "^3.2.0"
   },
   "devDependencies": {
@@ -53,6 +54,7 @@
     "@vue/eslint-config-typescript": "^14.6.0",
     "@vue/test-utils": "^2.4.6",
     "@vue/tsconfig": "^0.7.0",
+    "@vueuse/core": "^11.0.0",
     "eslint": "^9.31.0",
     "eslint-plugin-oxlint": "~1.8.0",
     "eslint-plugin-vue": "~10.3.0",
