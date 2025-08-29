@@ -1,5 +1,6 @@
 import { tryOnBeforeUnmount } from "@vueuse/core"
 import { isBoolean, isNil } from "es-toolkit"
+import type { MaybeRefOrGetter, ComputedRef } from 'vue'
 
 type LoadState = boolean | number | undefined | null
 type BindTarget = MaybeRefOrGetter<LoadState> | MaybeRefOrGetter<LoadState[]>
